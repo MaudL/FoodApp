@@ -2,9 +2,12 @@ package com.example.maud.foodapp;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -13,6 +16,9 @@ import  com.example.maud.foodapp.db.DatabaseHelper;
 import  com.example.maud.foodapp.db.RecipeData;
 import  com.example.maud.foodapp.model.RecipeDto;
 
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -86,11 +92,25 @@ public class ListRecipesActivity extends Activity {
     private List<RecipeDto> getRecipeInfos(List<RecipeData> recipeDataList) {
         List<RecipeDto> recipeInfos = new ArrayList<>();
         for(RecipeData recipeData : recipeDataList){
-            recipeInfos.add(new RecipeDto(recipeData.title, getDrawable(R.drawable.ic_launcher_background), "1", recipeData.ingredient, recipeData.stape));
+            recipeInfos.add(new RecipeDto(recipeData.title, null, "1", recipeData.ingredient, recipeData.stape));
         }
         return recipeInfos;
     }
 
+    protected Object deserializeObject(byte[] b) {
+        try {
+            ObjectInputStream inputStream = new ObjectInputStream(new ByteArrayInputStream(b));
+            Object object = inputStream.readObject();
+            inputStream.close();
+            return object;
+        } catch (ClassNotFoundException e) {
+            Log.e("Deserialization", "Error", e);
+            return null;
+        } catch (IOException e) {
+            Log.e("Deserialization", "Error io", e);
+            return null;
+        }
+    }
 
     /**
      * Start to listen for new data from each sensor

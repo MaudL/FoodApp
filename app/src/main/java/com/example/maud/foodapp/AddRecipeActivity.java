@@ -28,10 +28,14 @@ import com.example.maud.foodapp.db.DatabaseHelper;
 import com.example.maud.foodapp.db.RecipeData;
 import com.j256.ormlite.android.apptools.OpenHelperManager;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutput;
+import java.io.ObjectOutputStream;
 import java.sql.Blob;
 import java.sql.SQLException;
 import java.util.Calendar;
@@ -256,6 +260,8 @@ public class AddRecipeActivity extends AppCompatActivity {
     }
 
     private void clickAddSave(final String nameRecipe){
+        final byte[] photo_blob = serializeObject(photo_recipe);
+
         btn_save_recipe.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -284,7 +290,45 @@ public class AddRecipeActivity extends AppCompatActivity {
     }
 
 
+    /**
+     * Serialize an object
+     *
+     * @param object Object to serialize
+     * @return A byte array
+     */
+    protected byte[] serializeObject(Object object) {
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        try {
+            ObjectOutput output = new ObjectOutputStream(byteArrayOutputStream);
+            output.writeObject(object);
+            output.close();
+            return byteArrayOutputStream.toByteArray();
+        } catch (IOException e) {
+            Log.e("Serialization", "Error", e);
+            return null;
+        }
+    }
 
+    /**
+     * Deserialize a byte array
+     *
+     * @param b The byte array to deserialize
+     * @return The deserialized object
+     */
+    protected Object deserializeObject(byte[] b) {
+        try {
+            ObjectInputStream inputStream = new ObjectInputStream(new ByteArrayInputStream(b));
+            Object object = inputStream.readObject();
+            inputStream.close();
+            return object;
+        } catch (ClassNotFoundException e) {
+            Log.e("Deserialization", "Error", e);
+            return null;
+        } catch (IOException e) {
+            Log.e("Deserialization", "Error io", e);
+            return null;
+        }
+    }
 
 
     @Override

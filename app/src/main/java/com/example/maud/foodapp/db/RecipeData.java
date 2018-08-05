@@ -2,6 +2,7 @@ package com.example.maud.foodapp.db;
 
 import android.widget.ImageView;
 
+import com.j256.ormlite.field.DataType;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
@@ -32,8 +33,8 @@ public class RecipeData {
     /**
      * Stape field
      */
-    @DatabaseField(columnName = "picture")
-    public Blob picture;
+    @DatabaseField(columnName = "picture", dataType = DataType.BYTE_ARRAY)
+    public byte[] picture;
 
     /**
      * Id field
@@ -44,7 +45,15 @@ public class RecipeData {
     public RecipeData() {}
 
 
-    public RecipeData(String title, String ingredient, String stape, Blob picture){
+    public byte[] getPicture() {
+        return picture;
+    }
+
+    public void setPicture(byte[] picture) {
+        this.picture = picture;
+    }
+
+    public RecipeData(String title, String ingredient, String stape, byte[] picture){
         this.title = title;
         this.ingredient = ingredient;
         this.stape = stape;

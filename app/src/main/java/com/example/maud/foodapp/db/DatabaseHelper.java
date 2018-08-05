@@ -4,19 +4,11 @@ package  com.example.maud.foodapp.db;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.annotation.CallSuper;
-import android.util.Log;
 
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
-
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutput;
-import java.io.ObjectOutputStream;
 import java.sql.SQLException;
 import java.util.Collection;
 import java.util.List;
@@ -24,14 +16,6 @@ import java.util.List;
 public class DatabaseHelper extends OrmLiteSqliteOpenHelper{
 
     private Dao<RecipeData, Integer> recipeDAO= null;
-
-
-    /** CONSTANT
-     *
-     */
-    private static final String     DB_NAME = "food_database.db";
-    private static final int        DB_VERSION = 1;
-
 
     public DatabaseHelper(Context context, String databaseName, SQLiteDatabase.CursorFactory factory, int databaseVersion) {
         super(context, databaseName, factory, databaseVersion);
@@ -172,43 +156,5 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper{
         return dao.queryForEq(field, value);
     }
 
-    /**
-     * Serialize an object
-     *
-     * @param object Object to serialize
-     * @return A byte array
-     */
-    protected byte[] serializeObject(Object object) {
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        try {
-            ObjectOutput output = new ObjectOutputStream(byteArrayOutputStream);
-            output.writeObject(object);
-            output.close();
-            return byteArrayOutputStream.toByteArray();
-        } catch (IOException e) {
-            Log.e("Serialization", "Error", e);
-            return null;
-        }
-    }
 
-    /**
-     * Deserialize a byte array
-     *
-     * @param b The byte array to deserialize
-     * @return The deserialized object
-     */
-    protected Object deserializeObject(byte[] b) {
-        try {
-            ObjectInputStream inputStream = new ObjectInputStream(new ByteArrayInputStream(b));
-            Object object = inputStream.readObject();
-            inputStream.close();
-            return object;
-        } catch (ClassNotFoundException e) {
-            Log.e("Deserialization", "Error", e);
-            return null;
-        } catch (IOException e) {
-            Log.e("Deserialization", "Error io", e);
-            return null;
-        }
-    }
 }
