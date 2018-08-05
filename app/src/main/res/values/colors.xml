@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#FF4081</color>
+    <color name="colorPrimaryDark">#000000</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="colorAccentBis">#fc5068</color>
+    <color name="DarkPink">#D20062</color>
+    <color name="red">#FF0000</color>
+    <color name="white">#FFFFFF</color>
+    <color name="background_card"> #f2b8cb</color>
+    <color name="orange">#ff7d49</color>
+
+</resources>

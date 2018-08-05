@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp">
+
+
+    <EditText
+        android:id="@+id/add_ingredient"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:hint="@string/add_ingredient"/>
+
+    <Button
+        android:id="@+id/btn_add_ingredient"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/add_ingredient"
+        android:layout_toEndOf="@+id/add_ingredient" />
+
+    <EditText
+        android:id="@+id/add_stape"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/add_ingredient"
+        android:inputType="text"
+        android:hint="@string/add_stape"/>
+
+    <Button
+        android:id="@+id/btn_add_stape"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/add_ingredient"
+        android:layout_toRightOf="@+id/add_stape"
+        android:layout_toEndOf="@+id/add_stape" />
+
+    <Button
+        android:id="@+id/btn_add_photo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btn_add_stape"
+        android:text="@string/add_photo"/>
+
+    <TextView
+        android:id="@+id/display_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btn_add_photo"
+        android:textSize="@dimen/medium_txt"
+        android:layout_centerHorizontal="true"
+        />
+
+    <LinearLayout
+        android:id="@+id/layout_vert_ing"
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/display_title">
+    </LinearLayout>
+
+    <LinearLayout
+    android:id="@+id/layout_vert_stape"
+    android:orientation="vertical"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_below="@+id/layout_vert_ing">
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/recipe_photo"
+        android:layout_below="@+id/layout_vert_stape"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <Button
+        android:id="@+id/btn_save"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:text="@string/save_recipe"
+        />
+
+</RelativeLayout>

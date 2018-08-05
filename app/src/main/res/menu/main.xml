@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/add_recipe"
+            android:icon="@drawable/ic_launcher_background"
+            android:title="@string/add_recipe" />
+        <item
+            android:id="@+id/go_to_salty"
+            android:icon="@drawable/ic_launcher_background"
+            android:title="@string/salty" />
+        <item
+            android:id="@+id/go_to_sweet"
+            android:icon="@drawable/ic_launcher_background"
+            android:title="@string/sweet" />
+        <item
+            android:id="@+id/deconnection"
+            android:icon="@drawable/ic_launcher_background"
+            android:title="@string/deconnection" />
+
+    </group>
+
+</menu>
