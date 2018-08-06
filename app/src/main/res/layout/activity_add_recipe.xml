@@ -102,6 +102,7 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:background="@drawable/btn_custom"
+
         android:text="Enregistrer ma recette"
         />
 

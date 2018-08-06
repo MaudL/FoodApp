@@ -7,11 +7,14 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.media.MediaScannerConnection;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
@@ -37,6 +40,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.Calendar;
 
@@ -113,7 +117,7 @@ public class AddRecipeActivity extends AppCompatActivity {
                 String ingredient = add_ingredient.getText().toString();
                 add_ingredient.setText(""); // Vide l'editText
                 TextView textView = new TextView(getApplicationContext());
-                textView.setText("-" + ingredient + "\r\n");
+                textView.setText("- " + ingredient + "\r\n");
                 textView.setTextColor(R.color.colorPrimaryDark);
 
                 final LinearLayout linearLayoutHor = new LinearLayout(getApplicationContext());
@@ -125,14 +129,17 @@ public class AddRecipeActivity extends AppCompatActivity {
                         linearLayoutVert.removeView(linearLayoutHor);
                     }
                 });
-                linearLayoutHor.addView(button);
-                linearLayoutVert.addView(linearLayoutHor);
+                if(!ingredient.isEmpty()) {
+                    linearLayoutHor.addView(button);
+                    linearLayoutVert.addView(linearLayoutHor);
+                }
             }
         });
     }
 
     private void clickAddStape(final LinearLayout linearLayoutVert) {
         btn_add_stape.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
             @SuppressLint("ResourceAsColor")
             @Override
             public void onClick(View v) {
@@ -144,15 +151,19 @@ public class AddRecipeActivity extends AppCompatActivity {
                 final LinearLayout linearLayoutHor = new LinearLayout(getApplicationContext());
                 linearLayoutHor.addView(textView);
                 Button button = new Button(getApplicationContext());
+              //  button.setBackground(getResources().getDrawable(R.drawable.garbage_icon));
+
                 button.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         linearLayoutVert.removeView(linearLayoutHor);
                     }
                 });
-                linearLayoutHor.addView(button);
-                linearLayoutVert.addView(linearLayoutHor);
 
+                if(!ingredient.isEmpty()) {
+                    linearLayoutHor.addView(button);
+                    linearLayoutVert.addView(linearLayoutHor);
+                }
                 add_stape.setText("");
             }
         });
@@ -261,6 +272,7 @@ public class AddRecipeActivity extends AppCompatActivity {
         btn_save_recipe.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 final byte[] photo_blob = serializeObject(photo_recipe);
                 RecipeData recipeData = new RecipeData(nameRecipe, add_ingredient.getText().toString(), add_stape.getText().toString(), null);
 
