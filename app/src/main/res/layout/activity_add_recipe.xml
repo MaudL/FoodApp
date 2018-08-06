@@ -3,52 +3,73 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="10dp">
+    android:padding="0dp">
+    <RelativeLayout
+        android:id="@+id/essai"
+        android:orientation="horizontal"
+        android:padding="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <EditText
+            android:id="@+id/add_ingredient"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:textColorHint="@color/DarkPink"
+            android:hint="Ajouter un ingrédient"/>
+        <Button
+            android:id="@+id/btn_add_ingredient"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/btn_custom"
+            android:shadowDx="0"
+            android:shadowDy="0"
+            android:shadowRadius="5"/>
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/essai2"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:padding="5dp"
+        android:layout_below="@+id/essai"
+        android:layout_height="wrap_content">
+        <EditText
+            android:id="@+id/add_stape"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:textColorHint="@color/DarkPink"
+            android:hint="Ajouter une étape"/>
+        <Button
+            android:id="@+id/btn_add_stape"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@drawable/btn_custom"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true" />
+
+    </RelativeLayout>
 
 
-    <EditText
-        android:id="@+id/add_ingredient"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="text"
-        android:hint="@string/add_ingredient"/>
-
-    <Button
-        android:id="@+id/btn_add_ingredient"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/add_ingredient"
-        android:layout_toEndOf="@+id/add_ingredient" />
-
-    <EditText
-        android:id="@+id/add_stape"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/add_ingredient"
-        android:inputType="text"
-        android:hint="@string/add_stape"/>
-
-    <Button
-        android:id="@+id/btn_add_stape"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/add_ingredient"
-        android:layout_toRightOf="@+id/add_stape"
-        android:layout_toEndOf="@+id/add_stape" />
 
     <Button
         android:id="@+id/btn_add_photo"
+        android:padding="5dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/btn_add_stape"
-        android:text="@string/add_photo"/>
+        android:layout_below="@+id/essai2"
+        android:background="@drawable/btn_custom"
+        android:text="Ajouter une photo"/>
 
     <TextView
         android:id="@+id/display_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/btn_add_photo"
-        android:textSize="@dimen/medium_txt"
+        android:textSize="20sp"
         android:layout_centerHorizontal="true"
         />
 
@@ -61,11 +82,11 @@
     </LinearLayout>
 
     <LinearLayout
-    android:id="@+id/layout_vert_stape"
-    android:orientation="vertical"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_below="@+id/layout_vert_ing">
+        android:id="@+id/layout_vert_stape"
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/layout_vert_ing">
     </LinearLayout>
 
     <ImageView
@@ -75,11 +96,13 @@
         android:layout_height="wrap_content" />
     <Button
         android:id="@+id/btn_save"
-        android:layout_width="wrap_content"
+        android:padding="5dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:text="@string/save_recipe"
+        android:background="@drawable/btn_custom"
+        android:text="Enregistrer ma recette"
         />
 
 </RelativeLayout>

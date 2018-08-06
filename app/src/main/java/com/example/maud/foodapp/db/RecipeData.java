@@ -33,7 +33,7 @@ public class RecipeData {
     /**
      * Stape field
      */
-    @DatabaseField(columnName = "picture", dataType = DataType.BYTE_ARRAY)
+    @DatabaseField(columnName = "picture", dataType = DataType.SERIALIZABLE)
     public byte[] picture;
 
     /**

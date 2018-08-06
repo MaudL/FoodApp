@@ -1,6 +1,7 @@
 package com.example.maud.foodapp;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -36,15 +37,12 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
-import java.sql.Blob;
 import java.sql.SQLException;
 import java.util.Calendar;
-import java.util.List;
 
 public class AddRecipeActivity extends AppCompatActivity {
 
     private DatabaseHelper dbHelper = null;
-    private List<RecipeData> l = null;
     private EditText add_ingredient;
     private EditText add_stape;
     private TextView my_recipe;
@@ -108,6 +106,7 @@ public class AddRecipeActivity extends AppCompatActivity {
 
     private void clickAddIngredient(final LinearLayout linearLayoutVert){
         btn_add_ingredient.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("ResourceAsColor")
             @Override
             public void onClick(View v) {
 
@@ -115,6 +114,8 @@ public class AddRecipeActivity extends AppCompatActivity {
                 add_ingredient.setText(""); // Vide l'editText
                 TextView textView = new TextView(getApplicationContext());
                 textView.setText("-" + ingredient + "\r\n");
+                textView.setTextColor(R.color.colorPrimaryDark);
+
                 final LinearLayout linearLayoutHor = new LinearLayout(getApplicationContext());
                 linearLayoutHor.addView(textView);
                 Button button = new Button(getApplicationContext());
@@ -132,12 +133,14 @@ public class AddRecipeActivity extends AppCompatActivity {
 
     private void clickAddStape(final LinearLayout linearLayoutVert) {
         btn_add_stape.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("ResourceAsColor")
             @Override
             public void onClick(View v) {
                 i += 1;
                 String ingredient = add_stape.getText().toString();
                 TextView textView = new TextView(getApplicationContext());
                 textView.setText("Etape" + i + "\r\n" + ingredient + "\r\n");
+                textView.setTextColor(R.color.colorPrimaryDark);
                 final LinearLayout linearLayoutHor = new LinearLayout(getApplicationContext());
                 linearLayoutHor.addView(textView);
                 Button button = new Button(getApplicationContext());
@@ -212,8 +215,6 @@ public class AddRecipeActivity extends AppCompatActivity {
                 Uri contentURI = data.getData();
                 try {
                     Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), contentURI);
-                    String path = saveImage(bitmap);
-                    Toast.makeText(AddRecipeActivity.this, "Image Saved!", Toast.LENGTH_SHORT).show();
                     photo_recipe.setImageBitmap(bitmap);
 
                 } catch (IOException e) {
@@ -233,9 +234,7 @@ public class AddRecipeActivity extends AppCompatActivity {
     public String saveImage(Bitmap myBitmap) {
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
         myBitmap.compress(Bitmap.CompressFormat.JPEG, 90, bytes);
-        File wallpaperDirectory = new File(
-                Environment.getExternalStorageDirectory() + IMAGE_DIRECTORY);
-        // have the object build the directory structure, if needed.
+        File wallpaperDirectory = new File(Environment.getExternalStorageDirectory() + IMAGE_DIRECTORY);
         if (!wallpaperDirectory.exists()) {
             wallpaperDirectory.mkdirs();
         }
@@ -246,12 +245,9 @@ public class AddRecipeActivity extends AppCompatActivity {
             f.createNewFile();
             FileOutputStream fo = new FileOutputStream(f);
             fo.write(bytes.toByteArray());
-            MediaScannerConnection.scanFile(this,
-                    new String[]{f.getPath()},
-                    new String[]{"image/jpeg"}, null);
+            MediaScannerConnection.scanFile(this, new String[]{f.getPath()}, new String[]{"image/jpeg"}, null);
             fo.close();
             Log.d("TAG", "File Saved::--->" + f.getAbsolutePath());
-
             return f.getAbsolutePath();
         } catch (IOException e1) {
             e1.printStackTrace();
@@ -260,11 +256,12 @@ public class AddRecipeActivity extends AppCompatActivity {
     }
 
     private void clickAddSave(final String nameRecipe){
-        final byte[] photo_blob = serializeObject(photo_recipe);
+
 
         btn_save_recipe.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                final byte[] photo_blob = serializeObject(photo_recipe);
                 RecipeData recipeData = new RecipeData(nameRecipe, add_ingredient.getText().toString(), add_stape.getText().toString(), null);
 
                 try {
