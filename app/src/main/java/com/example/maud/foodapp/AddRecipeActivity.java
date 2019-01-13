@@ -7,7 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
+import android.graphics.drawable.BitmapDrawable;
 import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Build;
@@ -40,7 +40,6 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
-import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.Calendar;
 
@@ -70,8 +69,7 @@ public class AddRecipeActivity extends AppCompatActivity {
 
         initComponents();
 
-        final String nameRecipeExtra = getIntent().getStringExtra("nameRecipe") ;
-        my_recipe.setText(nameRecipeExtra);
+        my_recipe.setText("Ma recette");
 
 
         clickAddIngredient(linearLayoutVertIng);
@@ -79,7 +77,7 @@ public class AddRecipeActivity extends AppCompatActivity {
         clickAddPhoto();
         dbHelper = new DatabaseHelper(this, "food_database.db", null, 1);
 
-        clickAddSave(nameRecipeExtra);
+        clickAddSave("OKI");
 
         if (ContextCompat.checkSelfPermission(this,
                 Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
@@ -273,15 +271,15 @@ public class AddRecipeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                final byte[] photo_blob = serializeObject(photo_recipe);
-                RecipeData recipeData = new RecipeData(nameRecipe, add_ingredient.getText().toString(), add_stape.getText().toString(), null);
+                final byte[] photo_blob = imageToByteArray();
+                RecipeData recipeData = new RecipeData(nameRecipe, add_ingredient.getText().toString(), add_stape.getText().toString(), photo_blob);
 
                 try {
                     dbHelper.createOrUpdate(recipeData);
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
-                Intent myIntent = new Intent(AddRecipeActivity.this, MainActivity.class);
+                Intent myIntent = new Intent(AddRecipeActivity.this, ListRecipesActivity.class);
                 startActivity(myIntent);
             }
         });
@@ -296,6 +294,14 @@ public class AddRecipeActivity extends AppCompatActivity {
             OpenHelperManager.releaseHelper();
             dbHelper = null;
         }
+    }
+
+
+    private byte[] imageToByteArray(){
+        Bitmap bitmap = ((BitmapDrawable) photo_recipe.getDrawable()).getBitmap();
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        return baos.toByteArray();
     }
 
 
@@ -317,6 +323,8 @@ public class AddRecipeActivity extends AppCompatActivity {
             return null;
         }
     }
+
+
 
     /**
      * Deserialize a byte array

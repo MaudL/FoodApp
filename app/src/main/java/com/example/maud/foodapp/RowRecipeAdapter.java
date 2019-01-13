@@ -57,7 +57,8 @@ public class RowRecipeAdapter extends ArrayAdapter<RecipeDto> {
 
             viewHolder.title.setText(recipeInfo.getTitle());
             viewHolder.note.setText(recipeInfo.getMark());
-            viewHolder.photo.setImageDrawable(recipeInfo.getPhoto());
+            //viewHolder.photo.setImageDrawable(recipeInfo.getPhoto().getD);
+            viewHolder.photo.setImageBitmap(recipeInfo.getPhoto());
         }
         return convertView;
     }

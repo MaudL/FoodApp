@@ -3,23 +3,19 @@ package com.example.maud.foodapp;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
+import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
-import android.util.Log;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ListView;
+import android.widget.Toast;
 
 import  com.example.maud.foodapp.db.DatabaseHelper;
 import  com.example.maud.foodapp.db.RecipeData;
 import  com.example.maud.foodapp.model.RecipeDto;
 
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,12 +27,11 @@ public class ListRecipesActivity extends Activity {
 
     private DatabaseHelper dbHelper = null;
 
+    private List<RecipeDto> recipeItemList = null;
+
     private List<RecipeData> recipeDataList = null;
 
     /**
-     * This activity load the view from the "activity_list_recipes" xml file and load the sensors
-     * information to display.
-     *
      * @param pSavedInstanceState standard parameter for the onCreate method
      */
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -51,13 +46,11 @@ public class ListRecipesActivity extends Activity {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        final ListView listView = findViewById(R.id.list_all_recipes);
-        List<RecipeDto> recipeInfos = getRecipeInfos(recipeDataList);
 
-        RowRecipeAdapter adapter = new RowRecipeAdapter(ListRecipesActivity.this, recipeInfos);
-        listView.setAdapter(adapter);
+        recipeItemList = getRecipeInfos(recipeDataList);
 
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+    /*    listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 RecipeData recipeData = recipeDataList.get(position);
@@ -67,9 +60,23 @@ public class ListRecipesActivity extends Activity {
 
                 startActivity(myIntent);
             }
-        });
+        });*/
+
+        // Create the recyclerview.
+        RecyclerView carRecyclerView = (RecyclerView)findViewById(R.id.card_view_recycler_list);
+        // Create the grid layout manager with 2 columns.
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2);
+        // Set layout manager.
+        carRecyclerView.setLayoutManager(gridLayoutManager);
+
+        // Create car recycler view data adapter with car item list.
+        RecipeRecyclerViewDataAdapter carDataAdapter = new RecipeRecyclerViewDataAdapter(this, recipeItemList);
+        // Set data adapter.
+        carRecyclerView.setAdapter(carDataAdapter);
 
     }
+
+
 
 
 
@@ -92,24 +99,16 @@ public class ListRecipesActivity extends Activity {
     private List<RecipeDto> getRecipeInfos(List<RecipeData> recipeDataList) {
         List<RecipeDto> recipeInfos = new ArrayList<>();
         for(RecipeData recipeData : recipeDataList){
+            //Bitmap picture = byteArrayToImage(recipeData.getPicture());
             recipeInfos.add(new RecipeDto(recipeData.title, null, "1", recipeData.ingredient, recipeData.stape));
         }
         return recipeInfos;
     }
 
-    protected Object deserializeObject(byte[] b) {
-        try {
-            ObjectInputStream inputStream = new ObjectInputStream(new ByteArrayInputStream(b));
-            Object object = inputStream.readObject();
-            inputStream.close();
-            return object;
-        } catch (ClassNotFoundException e) {
-            Log.e("Deserialization", "Error", e);
-            return null;
-        } catch (IOException e) {
-            Log.e("Deserialization", "Error io", e);
-            return null;
-        }
+    private Bitmap byteArrayToImage(byte[] byte_image){
+        Bitmap bitmap = BitmapFactory.decodeByteArray(byte_image, 0, byte_image.length);
+        return bitmap;
+        //photo_recipe.setImageBitmap(Bitmap.createScaledBitmap(bitmap, photo_recipe.getWidth(), photo_recipe.getHeight(), false));
     }
 
     /**

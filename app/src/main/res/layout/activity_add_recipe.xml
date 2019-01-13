@@ -23,7 +23,6 @@
             android:layout_height="50dp"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:background="@drawable/btn_custom"
             android:shadowDx="0"
             android:shadowDy="0"
             android:shadowRadius="5"/>
@@ -47,7 +46,6 @@
             android:id="@+id/btn_add_stape"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:background="@drawable/btn_custom"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true" />
 
@@ -61,7 +59,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/essai2"
-        android:background="@drawable/btn_custom"
         android:text="Ajouter une photo"/>
 
     <TextView
@@ -101,7 +98,6 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:background="@drawable/btn_custom"
 
         android:text="Enregistrer ma recette"
         />

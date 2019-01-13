@@ -1,5 +1,6 @@
 package com.example.maud.foodapp.model;
 
+import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.widget.ImageView;
 
@@ -8,14 +9,14 @@ import java.io.Serializable;
 public class RecipeDto implements Serializable{
 
     private String title;
-    private Drawable photo;
+    private Bitmap photo;
     private String mark;
     private String ingredient;
     private String stape;
 
 
 
-    public RecipeDto(String title, Drawable photo, String mark, String ingredient, String stape) {
+    public RecipeDto(String title, Bitmap photo, String mark, String ingredient, String stape) {
         this.title = title;
         this.photo = photo;
         this.mark = mark;
@@ -32,11 +33,11 @@ public class RecipeDto implements Serializable{
         this.title = title;
     }
 
-    public Drawable getPhoto() {
+    public Bitmap getPhoto() {
         return photo;
     }
 
-    public void setPhoto(Drawable photo) {
+    public void setPhoto(Bitmap photo) {
         this.photo = photo;
     }
 
