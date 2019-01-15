@@ -1,4 +1,4 @@
-package com.example.maud.foodapp;
+package com.example.maud.foodapp.activities;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -7,11 +7,13 @@ import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.Toast;
 
+import com.example.maud.foodapp.R;
+import com.example.maud.foodapp.recipe_adapter.RecipeRecyclerViewDataAdapter;
 import  com.example.maud.foodapp.db.DatabaseHelper;
 import  com.example.maud.foodapp.db.RecipeData;
 import  com.example.maud.foodapp.model.RecipeDto;
@@ -31,6 +33,8 @@ public class ListRecipesActivity extends Activity {
 
     private List<RecipeData> recipeDataList = null;
 
+    private FloatingActionButton addRecipe = null;
+
     /**
      * @param pSavedInstanceState standard parameter for the onCreate method
      */
@@ -39,6 +43,7 @@ public class ListRecipesActivity extends Activity {
     protected void onCreate(Bundle pSavedInstanceState) {
         super.onCreate(pSavedInstanceState);
         setContentView(R.layout.activity_list_recipes);
+        addRecipe = findViewById(R.id.fab);
 
         dbHelper = new DatabaseHelper(this, "food_database.db", null, 1);
         try {
@@ -48,19 +53,6 @@ public class ListRecipesActivity extends Activity {
         }
 
         recipeItemList = getRecipeInfos(recipeDataList);
-
-
-    /*    listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                RecipeData recipeData = recipeDataList.get(position);
-                RecipeDto recipeDto = new RecipeDto(recipeData.title, null, "1", recipeData.ingredient, recipeData.stape);
-                Intent myIntent = new Intent(ListRecipesActivity.this, RecipeDetailsActivity.class);
-                myIntent.putExtra("recipe", (Serializable) recipeDto);
-
-                startActivity(myIntent);
-            }
-        });*/
 
         // Create the recyclerview.
         RecyclerView carRecyclerView = (RecyclerView)findViewById(R.id.card_view_recycler_list);
@@ -74,6 +66,14 @@ public class ListRecipesActivity extends Activity {
         // Set data adapter.
         carRecyclerView.setAdapter(carDataAdapter);
 
+       
+        addRecipe.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent myIntent = new Intent(ListRecipesActivity.this, AddRecipeActivity.class);
+                startActivity(myIntent);
+            }
+        });
     }
 
 

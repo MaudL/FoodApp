@@ -1,4 +1,4 @@
-package com.example.maud.foodapp;
+package com.example.maud.foodapp.activities;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -28,6 +28,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.maud.foodapp.R;
 import com.example.maud.foodapp.db.DatabaseHelper;
 import com.example.maud.foodapp.db.RecipeData;
 import com.j256.ormlite.android.apptools.OpenHelperManager;

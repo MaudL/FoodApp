@@ -1,4 +1,4 @@
-package com.example.maud.foodapp;
+package com.example.maud.foodapp.recipe_adapter;
 
 import android.content.Context;
 import android.content.Intent;
@@ -9,8 +9,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.maud.foodapp.R;
+import com.example.maud.foodapp.activities.RecipeDetailsActivity;
 import com.example.maud.foodapp.model.RecipeDto;
 
+import java.io.Serializable;
 import java.util.List;
 
 
@@ -27,42 +30,52 @@ public class RecipeRecyclerViewDataAdapter extends RecyclerView.Adapter<RecipeRe
         this.recipeItemList = recipeItemList;
         this.mContext = context;
     }
-
+    private ImageView test;
     @Override
-    public RecipeRecyclerViewItemHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public RecipeRecyclerViewItemHolder onCreateViewHolder(final ViewGroup parent, final int viewType) {
         // Get LayoutInflater object.
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         // Inflate the RecyclerView item layout xml.
-        View recipeItemView = layoutInflater.inflate(R.layout.activity_card_view_item, parent, false);
+        final View recipeItemView = layoutInflater.inflate(R.layout.activity_card_view_item, parent, false);
 
         final TextView recipeTitleView = recipeItemView.findViewById(R.id.card_view_image_title);
-        final ImageView recipeImageView = recipeItemView.findViewById(R.id.card_view_image);
-
-        recipeImageView.setOnClickListener(new View.OnClickListener() {
+       // final ImageView recipeImageView = recipeItemView.findViewById(R.id.card_view_image);
+        test = recipeItemView.findViewById(R.id.card_view_image);
+   /*     recipeImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+               // RecipeDto r = recipeItemList.get(v.);
 
                 Intent myIntent = new Intent(mContext, RecipeDetailsActivity.class);
                 mContext.startActivity(myIntent);
             }
-        });
+        });*/
 
         // Create and return our custom recipe Recycler View Item Holder object.
         RecipeRecyclerViewItemHolder ret = new RecipeRecyclerViewItemHolder(recipeItemView);
         return ret;
     }
     @Override
-    public void onBindViewHolder(RecipeRecyclerViewItemHolder holder, int position) {
-        if(recipeItemList!=null) {
+    public void onBindViewHolder(RecipeRecyclerViewItemHolder holder, final int position) {
+        if (recipeItemList != null) {
             RecipeDto recipeItem = recipeItemList.get(position);
 
-            if(recipeItem != null) {
+            if (recipeItem != null) {
                 holder.getRecipeTitleText().setText(recipeItem.getTitle());
-               // holder.getRecipeImageView().setImageResource(recipeItem.getRecipeImageId());
+                // holder.getRecipeImageView().setImageResource(recipeItem.getRecipeImageId());
             }
         }
-    }
+        test.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                RecipeDto recipeDto = recipeItemList.get(position);
 
+                Intent myIntent = new Intent(mContext, RecipeDetailsActivity.class);
+                myIntent.putExtra("recipe", (Serializable) recipeDto);
+                mContext.startActivity(myIntent);
+            }
+        });
+    }
     @Override
     public int getItemCount() {
         int ret = 0;
